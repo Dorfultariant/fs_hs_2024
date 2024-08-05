@@ -1,0 +1,45 @@
+sequenceDiagram
+    participant user
+    participant browser
+    participant server
+
+    %% START OF Example from the task:
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server
+    server->>browser: HTML document provided
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate server
+    server->>browser: JS file
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server->>browser: CSS file provided
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+
+    activate server
+    server->>browser: [{"content": "HTML is easy", "date": "2023-1-1"}, ...]
+    deactivate server
+
+    Note right of browser: The Browser executes the callback function that renders the notes
+
+    %% END OF Example from task, basic site loading happens there.
+
+    user->>browser: Write note and submit
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+
+    activate server
+    server->>browser: HTML redirection
+    deactivate server
+
+    Note right of server: Server handles request and responds with the site redirection
+
+    Note left of browser: Browser runs javascript onreadystatechange() function which updates the data shown on the page.
+
+
+
